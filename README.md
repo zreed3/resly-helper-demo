@@ -23,6 +23,7 @@ See [LICENSE](LICENSE). Commercial use, resale, sublicensing, hosted services, a
 make install-local
 resly --json doctor
 resly --json room-types list
+resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07
 resly --json reservations list --from 2026-07-01 --to 2026-07-31 --limit 10
 resly --json rates preview --rate-plan BAR-1BR-GARDEN --file examples/rate-update.json
 ```
@@ -87,6 +88,7 @@ claude/resly-mcp/resly-open-api.mcpb
 - [Human usage guide](docs/HUMAN_USAGE.md)
 - [Command contract](docs/COMMAND_CONTRACT.md)
 - [API inventory](docs/API_INVENTORY.md)
+- [Postman/Newman testing](docs/POSTMAN_TESTING.md)
 - [Sell-back brief](docs/SELL_BACK_BRIEF.md)
 - [Safety review and guardrail strategy](docs/SAFETY_REVIEW_AND_STRATEGY.md)
 - [Original demo plan](RESLY_CLI_DEMO_PLAN.md)
@@ -95,6 +97,7 @@ claude/resly-mcp/resly-open-api.mcpb
 
 ```bash
 cargo test
+make postman-test
 make install-local
 cd /tmp && resly --json doctor
 cd "/Users/zach/Documents/Resley CLI/claude/resly-mcp" && npm run smoke

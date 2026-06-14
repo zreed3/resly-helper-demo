@@ -15,6 +15,7 @@
     "capabilities": ["CLI", "API", "Read", "Write Preview"],
     "defaultPrompt": [
       "Check the Resly API setup.",
+      "Quote availability for 3 guests this weekend.",
       "List upcoming Resly reservations.",
       "Preview a Resly rate update."
     ],

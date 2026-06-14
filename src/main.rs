@@ -157,6 +157,11 @@ enum Commands {
         #[command(subcommand)]
         command: ReservationCommands,
     },
+    #[command(about = "Answer manager-friendly availability questions")]
+    Availability {
+        #[command(subcommand)]
+        command: AvailabilityCommands,
+    },
     #[command(about = "Read room blocks")]
     Blocks {
         #[command(subcommand)]
@@ -295,6 +300,25 @@ enum ReservationCommands {
     List(ReservationListArgs),
     Get(IdArg),
     InHouse,
+}
+
+#[derive(Subcommand, Debug)]
+#[command(rename_all = "kebab-case")]
+enum AvailabilityCommands {
+    #[command(about = "Quote available room types for a guest count and stay dates")]
+    Quote(AvailabilityQuoteArgs),
+}
+
+#[derive(Args, Debug)]
+struct AvailabilityQuoteArgs {
+    #[arg(long)]
+    guests: u64,
+    #[arg(long)]
+    from: String,
+    #[arg(long)]
+    to: String,
+    #[arg(long, default_value_t = 5)]
+    limit: usize,
 }
 
 #[derive(Args, Debug)]
@@ -743,43 +767,17 @@ fn dispatch(cli: &Cli, runtime: &Runtime) -> AppResult<CommandOutput> {
                 "reservations_inhouse",
             ),
         },
+        Commands::Availability { command } => match command {
+            AvailabilityCommands::Quote(args) => availability_quote(runtime, args),
+        },
         Commands::Blocks { command } => match command {
             BlockCommands::List(args) => blocks_list(runtime, args),
         },
         Commands::Inventory { command } => match command {
-            InventoryCommands::Get(args) => {
-                validate_date(&args.from, "--from")?;
-                validate_date(&args.to, "--to")?;
-                read_endpoint(
-                    runtime,
-                    "inventory.get",
-                    &format!("/room-types/{}/inventory", encode_path(&args.room_type)),
-                    vec![
-                        ("startDate".to_string(), args.from.clone()),
-                        ("endDate".to_string(), args.to.clone()),
-                    ],
-                    "inventory",
-                )
-            }
+            InventoryCommands::Get(args) => inventory_get(runtime, args),
         },
         Commands::Rates { command } => match command {
-            RateCommands::Get(args) => {
-                validate_date(&args.from, "--from")?;
-                validate_date(&args.to, "--to")?;
-                read_endpoint(
-                    runtime,
-                    "rates.get",
-                    &format!(
-                        "/rate-plans/{}/rates-and-restrictions",
-                        encode_path(&args.rate_plan)
-                    ),
-                    vec![
-                        ("startDate".to_string(), args.from.clone()),
-                        ("endDate".to_string(), args.to.clone()),
-                    ],
-                    "rates",
-                )
-            }
+            RateCommands::Get(args) => rates_get(runtime, args),
             RateCommands::Preview(args) => {
                 rates_preview(runtime, &args.rate_plan, &args.file, false)
             }
@@ -1150,6 +1148,282 @@ fn reservations_list(runtime: &Runtime, args: &ReservationListArgs) -> AppResult
     Ok(output)
 }
 
+fn availability_quote(runtime: &Runtime, args: &AvailabilityQuoteArgs) -> AppResult<CommandOutput> {
+    if args.guests == 0 {
+        return Err(AppError::new(
+            "input.invalid",
+            "--guests must be greater than zero",
+        ));
+    }
+    validate_date(&args.from, "--from")?;
+    validate_date(&args.to, "--to")?;
+    if args.from >= args.to {
+        return Err(AppError::new(
+            "date.invalid",
+            "--to must be later than --from for availability quotes",
+        ));
+    }
+
+    let room_types = collection_items(if runtime.fixture_mode {
+        fixture_value("room_types")?
+    } else {
+        live_get(runtime, "/room-types", &[])?
+    })?;
+    let rate_plans = collection_items(if runtime.fixture_mode {
+        fixture_value("rate_plans")?
+    } else {
+        live_get(runtime, "/rate-plans", &[])?
+    })?;
+
+    let mut options = Vec::new();
+    let mut skipped_for_occupancy = 0_u64;
+    for room_type in room_types {
+        let max_occupancy = room_type
+            .get("maxOccupancy")
+            .and_then(Value::as_u64)
+            .unwrap_or(0);
+        if max_occupancy < args.guests {
+            skipped_for_occupancy += 1;
+            continue;
+        }
+        if room_type.get("active").and_then(Value::as_bool) == Some(false) {
+            continue;
+        }
+        let Some(room_type_id) = room_type.get("roomTypeId").and_then(Value::as_str) else {
+            continue;
+        };
+        let rate_plan = rate_plans
+            .iter()
+            .find(|plan| {
+                plan.get("roomTypeId").and_then(Value::as_str) == Some(room_type_id)
+                    && plan.get("ratePlanId").and_then(Value::as_str).is_some()
+            })
+            .cloned();
+        let rate_plan_id = rate_plan
+            .as_ref()
+            .and_then(|plan| plan.get("ratePlanId"))
+            .and_then(Value::as_str);
+
+        let inventory = inventory_value(runtime, room_type_id, &args.from, &args.to)?;
+        let inventory_rows = collection_items(inventory)?;
+        let stay_inventory: Vec<Value> = inventory_rows
+            .into_iter()
+            .filter(|row| {
+                row.get("date")
+                    .and_then(Value::as_str)
+                    .map(|date| date >= args.from.as_str() && date < args.to.as_str())
+                    .unwrap_or(false)
+            })
+            .collect();
+        let min_available = stay_inventory
+            .iter()
+            .filter_map(|row| row.get("available").and_then(Value::as_i64))
+            .min()
+            .unwrap_or(0);
+
+        let rates = if let Some(rate_plan_id) = rate_plan_id {
+            rates_value(runtime, rate_plan_id, &args.from, &args.to)?
+        } else {
+            json!({ "data": [] })
+        };
+        let rate_rows = collection_items(rates)?;
+        let stay_rates: Vec<Value> = rate_rows
+            .into_iter()
+            .filter(|row| {
+                row.get("date")
+                    .and_then(Value::as_str)
+                    .map(|date| date >= args.from.as_str() && date < args.to.as_str())
+                    .unwrap_or(false)
+            })
+            .collect();
+        let total_rate: f64 = stay_rates
+            .iter()
+            .filter_map(|row| row.get("rate").and_then(Value::as_f64))
+            .sum();
+        let lowest_rate = stay_rates
+            .iter()
+            .filter_map(|row| row.get("rate").and_then(Value::as_f64))
+            .min_by(|left, right| left.total_cmp(right));
+        let stop_sell = stay_rates.iter().any(|row| {
+            row.get("stopSell")
+                .and_then(Value::as_bool)
+                .unwrap_or(false)
+        });
+        let available = min_available > 0 && !stop_sell && !stay_inventory.is_empty();
+        let mut reasons = Vec::new();
+        if stay_inventory.is_empty() {
+            reasons.push("No inventory rows returned for the stay dates");
+        }
+        if min_available <= 0 {
+            reasons.push("No rooms available on at least one night");
+        }
+        if stop_sell {
+            reasons.push("Stop-sell is active on at least one night");
+        }
+        if rate_plan_id.is_none() {
+            reasons.push("No rate plan found for this room type");
+        }
+
+        options.push(json!({
+            "roomTypeId": room_type_id,
+            "roomTypeName": room_type.get("roomTypeName").and_then(Value::as_str).unwrap_or(room_type_id),
+            "maxOccupancy": max_occupancy,
+            "ratePlanId": rate_plan_id,
+            "currency": rate_plan
+                .as_ref()
+                .and_then(|plan| plan.get("currency"))
+                .and_then(Value::as_str)
+                .unwrap_or("AUD"),
+            "available": available,
+            "minAvailable": min_available.max(0),
+            "nightsChecked": stay_inventory.len().max(stay_rates.len()),
+            "lowestNightlyRate": lowest_rate,
+            "estimatedTotal": if stay_rates.is_empty() { Value::Null } else { json!(total_rate) },
+            "reasons": reasons
+        }));
+    }
+
+    options.sort_by(|left, right| {
+        let left_available = left
+            .get("available")
+            .and_then(Value::as_bool)
+            .unwrap_or(false);
+        let right_available = right
+            .get("available")
+            .and_then(Value::as_bool)
+            .unwrap_or(false);
+        right_available
+            .cmp(&left_available)
+            .then_with(|| {
+                option_total(left)
+                    .partial_cmp(&option_total(right))
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
+            .then_with(|| {
+                left.get("roomTypeName")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .cmp(
+                        right
+                            .get("roomTypeName")
+                            .and_then(Value::as_str)
+                            .unwrap_or(""),
+                    )
+            })
+    });
+    let available_count = options
+        .iter()
+        .filter(|option| {
+            option
+                .get("available")
+                .and_then(Value::as_bool)
+                .unwrap_or(false)
+        })
+        .count();
+    let recommended = options
+        .iter()
+        .find(|option| {
+            option
+                .get("available")
+                .and_then(Value::as_bool)
+                .unwrap_or(false)
+        })
+        .cloned()
+        .unwrap_or(Value::Null);
+    if options.len() > args.limit {
+        options.truncate(args.limit);
+    }
+
+    Ok(CommandOutput {
+        command: "availability.quote",
+        data: json!({
+            "guests": args.guests,
+            "from": args.from,
+            "to": args.to,
+            "availableOptions": available_count,
+            "skippedForOccupancy": skipped_for_occupancy,
+            "recommended": recommended,
+            "options": options
+        }),
+        human: format!(
+            "Found {available_count} available option(s) for {} guest(s) from {} to {}.",
+            args.guests, args.from, args.to
+        ),
+        source: if runtime.fixture_mode {
+            "fixture"
+        } else {
+            "live"
+        },
+        extra: Map::new(),
+    })
+}
+
+fn option_total(option: &Value) -> f64 {
+    option
+        .get("estimatedTotal")
+        .and_then(Value::as_f64)
+        .unwrap_or(f64::MAX)
+}
+
+fn inventory_get(runtime: &Runtime, args: &InventoryArgs) -> AppResult<CommandOutput> {
+    validate_date(&args.from, "--from")?;
+    validate_date(&args.to, "--to")?;
+    Ok(output(
+        "inventory.get",
+        inventory_value(runtime, &args.room_type, &args.from, &args.to)?,
+        if runtime.fixture_mode {
+            "fixture"
+        } else {
+            "live"
+        },
+    ))
+}
+
+fn rates_get(runtime: &Runtime, args: &RateReadArgs) -> AppResult<CommandOutput> {
+    validate_date(&args.from, "--from")?;
+    validate_date(&args.to, "--to")?;
+    Ok(output(
+        "rates.get",
+        rates_value(runtime, &args.rate_plan, &args.from, &args.to)?,
+        if runtime.fixture_mode {
+            "fixture"
+        } else {
+            "live"
+        },
+    ))
+}
+
+fn inventory_value(runtime: &Runtime, room_type: &str, from: &str, to: &str) -> AppResult<Value> {
+    if runtime.fixture_mode {
+        return fixture_scoped_value("inventory_by_room_type", "inventory", room_type, from, to);
+    }
+    live_get(
+        runtime,
+        &format!("/room-types/{}/inventory", encode_path(room_type)),
+        &[
+            ("startDate".to_string(), from.to_string()),
+            ("endDate".to_string(), to.to_string()),
+        ],
+    )
+}
+
+fn rates_value(runtime: &Runtime, rate_plan: &str, from: &str, to: &str) -> AppResult<Value> {
+    if runtime.fixture_mode {
+        return fixture_scoped_value("rates_by_rate_plan", "rates", rate_plan, from, to);
+    }
+    live_get(
+        runtime,
+        &format!(
+            "/rate-plans/{}/rates-and-restrictions",
+            encode_path(rate_plan)
+        ),
+        &[
+            ("startDate".to_string(), from.to_string()),
+            ("endDate".to_string(), to.to_string()),
+        ],
+    )
+}
+
 fn blocks_list(runtime: &Runtime, args: &BlockListArgs) -> AppResult<CommandOutput> {
     validate_date(&args.from, "--from")?;
     validate_date(&args.to, "--to")?;
@@ -1372,7 +1646,34 @@ fn write_or_preview(
 
 fn request_get(runtime: &Runtime, raw_path: &str) -> AppResult<CommandOutput> {
     if runtime.fixture_mode {
-        let key = match raw_path.split('?').next().unwrap_or(raw_path) {
+        let (path, query) = split_raw_path(raw_path);
+        if let Some(room_type) = scoped_path_id(path, "room-types", "inventory") {
+            let from =
+                query_param(query, &["startDate", "from"]).unwrap_or_else(|| "0000-00-00".into());
+            let to = query_param(query, &["endDate", "to"]).unwrap_or_else(|| "9999-99-99".into());
+            return Ok(output(
+                "request.get",
+                fixture_scoped_value(
+                    "inventory_by_room_type",
+                    "inventory",
+                    &room_type,
+                    &from,
+                    &to,
+                )?,
+                "fixture",
+            ));
+        }
+        if let Some(rate_plan) = scoped_path_id(path, "rate-plans", "rates-and-restrictions") {
+            let from =
+                query_param(query, &["startDate", "from"]).unwrap_or_else(|| "0000-00-00".into());
+            let to = query_param(query, &["endDate", "to"]).unwrap_or_else(|| "9999-99-99".into());
+            return Ok(output(
+                "request.get",
+                fixture_scoped_value("rates_by_rate_plan", "rates", &rate_plan, &from, &to)?,
+                "fixture",
+            ));
+        }
+        let key = match path {
             "/property" => "account",
             "/agents" => "agents",
             "/room-types" => "room_types",
@@ -1382,8 +1683,6 @@ fn request_get(runtime: &Runtime, raw_path: &str) -> AppResult<CommandOutput> {
             "/reservations-inhouse" => "reservations_inhouse",
             "/blocks" => "blocks",
             "/webhooks" => "webhooks",
-            path if path.contains("/inventory") => "inventory",
-            path if path.contains("/rates-and-restrictions") => "rates",
             _ => {
                 return Err(AppError::new(
                     "fixture.missing",
@@ -1395,6 +1694,42 @@ fn request_get(runtime: &Runtime, raw_path: &str) -> AppResult<CommandOutput> {
     }
     let data = live_get(runtime, raw_path, &[])?;
     Ok(output("request.get", data, "live"))
+}
+
+fn split_raw_path(raw_path: &str) -> (&str, Option<&str>) {
+    raw_path
+        .split_once('?')
+        .map(|(path, query)| (path, Some(query)))
+        .unwrap_or((raw_path, None))
+}
+
+fn scoped_path_id(path: &str, collection: &str, child: &str) -> Option<String> {
+    let parts: Vec<&str> = path.trim_matches('/').split('/').collect();
+    match parts.as_slice() {
+        [path_collection, id, path_child]
+            if *path_collection == collection && *path_child == child =>
+        {
+            Some(decode_path(id))
+        }
+        _ => None,
+    }
+}
+
+fn decode_path(value: &str) -> String {
+    urlencoding::decode(value)
+        .map(|decoded| decoded.into_owned())
+        .unwrap_or_else(|_| value.to_string())
+}
+
+fn query_param(query: Option<&str>, names: &[&str]) -> Option<String> {
+    query.and_then(|query| {
+        query.split('&').find_map(|pair| {
+            let (key, value) = pair.split_once('=')?;
+            names
+                .contains(&key)
+                .then(|| decode_path(value.replace('+', " ").as_str()))
+        })
+    })
 }
 
 fn create_approval_request(
@@ -1895,6 +2230,40 @@ fn fixture_value(key: &str) -> AppResult<Value> {
         .ok_or_else(|| AppError::new("fixture.missing", format!("Missing fixture key {key}")))
 }
 
+fn fixture_scoped_value(
+    scoped_key: &str,
+    fallback_key: &str,
+    id: &str,
+    from: &str,
+    to: &str,
+) -> AppResult<Value> {
+    let data = fixture()?;
+    let mut value = data
+        .get(scoped_key)
+        .and_then(|group| group.get(id))
+        .cloned()
+        .or_else(|| data.get(fallback_key).cloned())
+        .ok_or_else(|| AppError::new("fixture.missing", format!("Missing fixture for {id}")))?;
+    if let Some(items) = value.get_mut("data").and_then(Value::as_array_mut) {
+        items.retain(|item| {
+            item.get("date")
+                .and_then(Value::as_str)
+                .map(|date| date >= from && date <= to)
+                .unwrap_or(true)
+        });
+        value["count"] = json!(items.len());
+    }
+    Ok(value)
+}
+
+fn collection_items(value: Value) -> AppResult<Vec<Value>> {
+    value
+        .get("data")
+        .and_then(Value::as_array)
+        .cloned()
+        .ok_or_else(|| AppError::new("fixture.invalid", "Collection response has no data[]"))
+}
+
 fn find_in_collection(collection: Value, id: &str, id_fields: &[&str]) -> AppResult<Value> {
     let items = collection
         .get("data")
@@ -2058,6 +2427,18 @@ fn redact_sensitive_string(value: &str) -> String {
 mod tests {
     use super::*;
 
+    fn fixture_runtime() -> Runtime {
+        Runtime {
+            account_id: None,
+            api_key: None,
+            base_url: DEFAULT_TEST_URL.to_string(),
+            environment: "test".to_string(),
+            auth_source: "missing",
+            base_url_source: "default",
+            fixture_mode: true,
+        }
+    }
+
     #[test]
     fn validates_dates() {
         assert!(validate_date("2026-07-01", "--from").is_ok());
@@ -2075,11 +2456,95 @@ mod tests {
             "rate_plans",
             "reservations",
             "inventory",
+            "inventory_by_room_type",
             "rates",
+            "rates_by_rate_plan",
             "webhooks",
         ] {
             assert!(data.get(key).is_some(), "missing {key}");
         }
+    }
+
+    #[test]
+    fn fixture_inventory_and_rates_are_scoped() {
+        let inventory = fixture_scoped_value(
+            "inventory_by_room_type",
+            "inventory",
+            "2BR-OCEAN",
+            "2026-07-05",
+            "2026-07-07",
+        )
+        .unwrap();
+        assert_eq!(inventory["roomTypeId"], "2BR-OCEAN");
+        assert_eq!(inventory["count"], 3);
+
+        let rates = fixture_scoped_value(
+            "rates_by_rate_plan",
+            "rates",
+            "BAR-2BR-OCEAN",
+            "2026-07-05",
+            "2026-07-07",
+        )
+        .unwrap();
+        assert_eq!(rates["ratePlanId"], "BAR-2BR-OCEAN");
+        assert_eq!(rates["count"], 3);
+    }
+
+    #[test]
+    fn raw_fixture_request_uses_scoped_inventory_and_rates() {
+        let runtime = fixture_runtime();
+        let inventory = request_get(
+            &runtime,
+            "/room-types/2BR-OCEAN/inventory?startDate=2026-07-05&endDate=2026-07-07",
+        )
+        .unwrap();
+        assert_eq!(inventory.data["roomTypeId"], "2BR-OCEAN");
+
+        let rates = request_get(
+            &runtime,
+            "/rate-plans/BAR-2BR-OCEAN/rates-and-restrictions?startDate=2026-07-05&endDate=2026-07-07",
+        )
+        .unwrap();
+        assert_eq!(rates.data["ratePlanId"], "BAR-2BR-OCEAN");
+    }
+
+    #[test]
+    fn availability_quote_answers_guest_count_question() {
+        let runtime = fixture_runtime();
+        let output = availability_quote(
+            &runtime,
+            &AvailabilityQuoteArgs {
+                guests: 3,
+                from: "2026-07-05".to_string(),
+                to: "2026-07-07".to_string(),
+                limit: 5,
+            },
+        )
+        .unwrap();
+        assert_eq!(output.command, "availability.quote");
+        assert_eq!(output.data["availableOptions"], 2);
+        assert_eq!(output.data["recommended"]["roomTypeId"], "1BR-GARDEN");
+        assert_eq!(output.data["recommended"]["estimatedTotal"], 630.0);
+        assert!(
+            output.data["options"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|option| option["roomTypeId"] == "2BR-OCEAN")
+        );
+
+        let limited_output = availability_quote(
+            &runtime,
+            &AvailabilityQuoteArgs {
+                guests: 3,
+                from: "2026-07-05".to_string(),
+                to: "2026-07-07".to_string(),
+                limit: 1,
+            },
+        )
+        .unwrap();
+        assert_eq!(limited_output.data["availableOptions"], 2);
+        assert_eq!(limited_output.data["options"].as_array().unwrap().len(), 1);
     }
 
     #[test]

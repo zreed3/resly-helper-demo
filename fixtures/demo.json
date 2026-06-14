@@ -249,6 +249,50 @@
       { "date": "2026-07-07", "available": 2, "sold": 1, "blocked": 0 }
     ]
   },
+  "inventory_by_room_type": {
+    "1BR-GARDEN": {
+      "type": "inventory",
+      "count": 7,
+      "roomTypeId": "1BR-GARDEN",
+      "data": [
+        { "date": "2026-07-01", "available": 2, "sold": 1, "blocked": 0 },
+        { "date": "2026-07-02", "available": 1, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-03", "available": 1, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-04", "available": 0, "sold": 3, "blocked": 0 },
+        { "date": "2026-07-05", "available": 1, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-06", "available": 2, "sold": 1, "blocked": 0 },
+        { "date": "2026-07-07", "available": 2, "sold": 1, "blocked": 0 }
+      ]
+    },
+    "2BR-OCEAN": {
+      "type": "inventory",
+      "count": 7,
+      "roomTypeId": "2BR-OCEAN",
+      "data": [
+        { "date": "2026-07-01", "available": 3, "sold": 1, "blocked": 0 },
+        { "date": "2026-07-02", "available": 3, "sold": 1, "blocked": 0 },
+        { "date": "2026-07-03", "available": 2, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-04", "available": 2, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-05", "available": 2, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-06", "available": 2, "sold": 2, "blocked": 0 },
+        { "date": "2026-07-07", "available": 3, "sold": 1, "blocked": 0 }
+      ]
+    },
+    "PENTHOUSE": {
+      "type": "inventory",
+      "count": 7,
+      "roomTypeId": "PENTHOUSE",
+      "data": [
+        { "date": "2026-07-01", "available": 0, "sold": 0, "blocked": 1 },
+        { "date": "2026-07-02", "available": 0, "sold": 0, "blocked": 1 },
+        { "date": "2026-07-03", "available": 0, "sold": 0, "blocked": 1 },
+        { "date": "2026-07-04", "available": 0, "sold": 0, "blocked": 1 },
+        { "date": "2026-07-05", "available": 0, "sold": 1, "blocked": 0 },
+        { "date": "2026-07-06", "available": 1, "sold": 0, "blocked": 0 },
+        { "date": "2026-07-07", "available": 1, "sold": 0, "blocked": 0 }
+      ]
+    }
+  },
   "rates": {
     "type": "rates-and-restrictions",
     "count": 7,
@@ -262,6 +306,50 @@
       { "date": "2026-07-06", "rate": 300, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
       { "date": "2026-07-07", "rate": 300, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false }
     ]
+  },
+  "rates_by_rate_plan": {
+    "BAR-1BR-GARDEN": {
+      "type": "rates-and-restrictions",
+      "count": 7,
+      "ratePlanId": "BAR-1BR-GARDEN",
+      "data": [
+        { "date": "2026-07-01", "rate": 290, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-02", "rate": 320, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-03", "rate": 340, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-04", "rate": 360, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": true, "ctd": false },
+        { "date": "2026-07-05", "rate": 330, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-06", "rate": 300, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-07", "rate": 300, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false }
+      ]
+    },
+    "BAR-2BR-OCEAN": {
+      "type": "rates-and-restrictions",
+      "count": 7,
+      "ratePlanId": "BAR-2BR-OCEAN",
+      "data": [
+        { "date": "2026-07-01", "rate": 430, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-02", "rate": 450, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-03", "rate": 480, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-04", "rate": 520, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-05", "rate": 520, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-06", "rate": 460, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-07", "rate": 440, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false }
+      ]
+    },
+    "BAR-PENTHOUSE": {
+      "type": "rates-and-restrictions",
+      "count": 7,
+      "ratePlanId": "BAR-PENTHOUSE",
+      "data": [
+        { "date": "2026-07-01", "rate": 950, "stopSell": true, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-02", "rate": 950, "stopSell": true, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-03", "rate": 1100, "stopSell": true, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-04", "rate": 1200, "stopSell": true, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-05", "rate": 980, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-06", "rate": 900, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+        { "date": "2026-07-07", "rate": 900, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false }
+      ]
+    }
   },
   "webhooks": {
     "type": "webhooks",

@@ -32,6 +32,7 @@ resly --json room-types list
 resly --json rooms list
 resly --json rate-plans list
 resly --json reservations list --from 2026-07-01 --to 2026-07-31 --limit 20
+resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07
 resly --json inventory get --room-type 1BR-GARDEN --from 2026-07-01 --to 2026-07-07
 resly --json rates get --rate-plan BAR-1BR-GARDEN --from 2026-07-01 --to 2026-07-07
 ```

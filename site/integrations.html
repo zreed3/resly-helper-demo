@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Claude & Codex | Resly Helper</title>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/styles.css?v=20260614-postman2" />
   </head>
   <body>
     <header class="site-header">
@@ -72,7 +72,10 @@
             <h2>The manager sees chat. The team gets a real integration.</h2>
             <p class="section-lede">Under the hood, this demo includes a Codex plugin and a Claude package. That gives Resly something practical to test without asking managers to learn API language.</p>
           </div>
-          <pre class="command-block reveal"><button class="copy-btn">Copy</button><code>Codex plugin: plugins/resly-open-api
+          <pre class="command-block reveal"><button class="copy-btn">Copy</button><code>Example manager question:
+resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07
+
+Codex plugin: plugins/resly-open-api
 Claude package: claude/resly-mcp/resly-open-api.mcpb
 Shared safe layer: resly CLI</code></pre>
         </div>

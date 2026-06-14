@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Daily Jobs | Resly Helper</title>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/styles.css?v=20260614-postman2" />
   </head>
   <body>
     <header class="site-header">
@@ -66,7 +66,7 @@
         <div class="section-inner phone-panel reveal">
           <div class="phone-shell" aria-label="Phone assistant conversation example">
             <div class="phone-message">Can we take 3 people from July 5 to July 7?</div>
-            <div class="phone-message answer">Yes. Two room types fit 3 people. One Bedroom Garden is cheaper but tight on July 6.</div>
+            <div class="phone-message answer">Yes. Two room types fit 3 people. One Bedroom Garden is cheaper but tight on July 5.</div>
             <div class="phone-message">What should I tell the guest?</div>
             <div class="phone-message answer">Quote Two Bedroom Ocean if they want flexibility. Quote One Bedroom Garden only if they are ready to book now.</div>
           </div>
@@ -78,7 +78,10 @@
 "How many rooms are available for 3 people this weekend?"
 
 Answer:
-"Two options fit. One is cheaper. One has more availability."</code></pre>
+"Two options fit. One is cheaper. One has more availability."
+
+CLI check:
+resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07</code></pre>
           </div>
         </div>
       </section>

@@ -36,6 +36,7 @@ The response includes a Bearer token, typically valid for 24 hours.
 | `reservations list` | `/reservations` | GET | Requires `dateType`; date or timestamp bounds |
 | `reservations get` | `/reservations/{reservationId}` | GET | Exact reservation read |
 | `reservations in-house` | `/reservations-inhouse` | GET | In-house reservation list |
+| `availability quote` | `/room-types`, `/rate-plans`, `/room-types/{roomTypeId}/inventory`, `/rate-plans/{ratePlanId}/rates-and-restrictions` | GET | Composed read for guest count, dates, availability, stop-sells, and rate totals |
 | `blocks list` | `/blocks` | GET | Requires `dateType`, `startDate`, `endDate` |
 | `inventory get` | `/room-types/{roomTypeId}/inventory` | GET | Requires `startDate`, `endDate` |
 | `rates get` | `/rate-plans/{ratePlanId}/rates-and-restrictions` | GET | Requires `startDate`, `endDate` |

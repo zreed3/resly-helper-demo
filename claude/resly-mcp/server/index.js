@@ -141,6 +141,36 @@ server.registerTool(
 );
 
 server.registerTool(
+  "quote_availability",
+  {
+    title: "Quote Resly availability",
+    description: "Answers a manager-friendly availability question by guest count and stay dates.",
+    inputSchema: {
+      guests: z.number().int().min(1).describe("Number of guests to fit."),
+      from: z.string().default("2026-07-05").describe("Check-in date in YYYY-MM-DD format."),
+      to: z.string().default("2026-07-07").describe("Check-out date in YYYY-MM-DD format."),
+      limit: z.number().int().min(1).max(20).default(5)
+    }
+  },
+  async ({ guests, from = "2026-07-05", to = "2026-07-07", limit = 5 }) =>
+    textResult(
+      await runResly([
+        "--json",
+        "availability",
+        "quote",
+        "--guests",
+        String(guests),
+        "--from",
+        from,
+        "--to",
+        to,
+        "--limit",
+        String(limit)
+      ])
+    )
+);
+
+server.registerTool(
   "preview_rate_update",
   {
     title: "Preview Resly rate update",

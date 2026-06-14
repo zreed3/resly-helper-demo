@@ -252,7 +252,7 @@ h3 {
 
 .split {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: 56px;
   align-items: center;
 }
@@ -441,9 +441,15 @@ h3 {
 
 .demo-grid {
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
   gap: 34px;
   align-items: start;
+}
+
+.demo-grid > *,
+.demo-stack > *,
+.split > * {
+  min-width: 0;
 }
 
 .demo-menu {
@@ -666,7 +672,7 @@ h3 {
   transform: translateY(0);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 960px) {
   .site-header {
     align-items: flex-start;
     flex-direction: column;

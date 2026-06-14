@@ -65,6 +65,14 @@ resly --json reservations get <reservation-id>
 resly --json reservations in-house
 ```
 
+## Availability Quote
+
+```bash
+resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07 --limit 5
+```
+
+`availability quote` is a manager-friendly read workflow. It combines room types, rate plans, room-type inventory, and rates/restrictions to answer whether a guest count fits a date range. The check-out date is treated as exclusive for nightly availability and rate totals.
+
 ## Inventory, Blocks, Rates
 
 ```bash

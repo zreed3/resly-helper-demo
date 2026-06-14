@@ -26,6 +26,16 @@ resly --json rate-plans list
 
 `doctor` reports `fixtureMode: true` when no Resly credentials are configured.
 
+## Availability Demo
+
+Use this when a manager asks a normal guest question from the desk or their phone:
+
+```bash
+resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07
+```
+
+The CLI checks room types, matching rate plans, inventory, stop-sells, and nightly rates. It returns the cheapest available option first, plus other options that fit the guest count.
+
 ## Configure Resly Test Access
 
 ```bash

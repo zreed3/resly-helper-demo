@@ -1,0 +1,186 @@
+{
+  "info": {
+    "name": "Resly Helper CLI Demo",
+    "_postman_id": "f2c3f05b-fd65-41a1-8d57-4b9aef364e6d",
+    "description": "Newman tests for the Resly Helper CLI wrapper, including manager availability and write guardrails.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8765"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('wrapper is healthy', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().ok).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctor Fixture Mode",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/doctor"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.test('doctor succeeds', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(body.ok).to.equal(true);",
+              "  pm.expect(body.command).to.equal('doctor');",
+              "});",
+              "pm.test('doctor uses fixture mode', function () {",
+              "  pm.expect(body.data.fixtureMode).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Availability Quote For 3 Guests",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/availability/quote?guests=3&from=2026-07-05&to=2026-07-07"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.test('availability quote succeeds', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(body.ok).to.equal(true);",
+              "  pm.expect(body.command).to.equal('availability.quote');",
+              "});",
+              "pm.test('quote answers the manager question', function () {",
+              "  pm.expect(body.data.guests).to.equal(3);",
+              "  pm.expect(body.data.availableOptions).to.equal(2);",
+              "  pm.expect(body.data.recommended.roomTypeId).to.equal('1BR-GARDEN');",
+              "  pm.expect(body.data.options.some((option) => option.roomTypeId === '2BR-OCEAN')).to.equal(true);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scoped 2BR Inventory",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/inventory?roomType=2BR-OCEAN&from=2026-07-05&to=2026-07-07"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.test('inventory is scoped to the requested room type', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(body.command).to.equal('inventory.get');",
+              "  pm.expect(body.data.roomTypeId).to.equal('2BR-OCEAN');",
+              "  pm.expect(body.data.count).to.equal(3);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scoped 2BR Rates",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/rates?ratePlan=BAR-2BR-OCEAN&from=2026-07-05&to=2026-07-07"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.test('rates are scoped to the requested rate plan', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(body.command).to.equal('rates.get');",
+              "  pm.expect(body.data.ratePlanId).to.equal('BAR-2BR-OCEAN');",
+              "  pm.expect(body.data.count).to.equal(3);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Live Rates Without Approval Is Refused",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/safety/rates-live-without-approval"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.test('live rate update needs approval', function () {",
+              "  pm.response.to.have.status(409);",
+              "  pm.expect(body.ok).to.equal(false);",
+              "  pm.expect(body.error.code).to.equal('approval.required');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhook Delete Without Confirm Is Refused",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/safety/webhook-delete-without-confirm"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "pm.test('live webhook delete needs explicit confirm-delete', function () {",
+              "  pm.response.to.have.status(409);",
+              "  pm.expect(body.ok).to.equal(false);",
+              "  pm.expect(body.error.code).to.equal('write.refused');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

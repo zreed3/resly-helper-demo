@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Try It | Resly Helper</title>
-    <link rel="stylesheet" href="assets/styles.css" />
+    <link rel="stylesheet" href="assets/styles.css?v=20260614-postman2" />
   </head>
   <body>
     <header class="site-header">
@@ -47,9 +47,7 @@
             <section id="availability" class="reveal">
               <h2>2. Answer a guest question</h2>
               <p class="section-lede">"How many rooms are available for 3 people this weekend?"</p>
-              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json room-types list
-resly --json inventory get --room-type 1BR-GARDEN --from 2026-07-05 --to 2026-07-07
-resly --json rates get --rate-plan BAR-1BR-GARDEN --from 2026-07-05 --to 2026-07-07</code></pre>
+              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json availability quote --guests 3 --from 2026-07-05 --to 2026-07-07</code></pre>
             </section>
             <section id="today" class="reveal">
               <h2>3. Show the morning brief</h2>

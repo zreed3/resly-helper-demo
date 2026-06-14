@@ -8,6 +8,7 @@ This package exposes the installed `resly` CLI to Claude through a local MCP std
 - `list_room_types`
 - `list_reservations`
 - `get_rates`
+- `quote_availability`
 - `preview_rate_update`
 - `preview_webhook`
 - `raw_get`
