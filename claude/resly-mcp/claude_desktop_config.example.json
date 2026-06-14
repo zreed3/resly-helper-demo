@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "resly-open-api": {
+      "command": "node",
+      "args": [
+        "/Users/zach/Documents/Resley CLI/claude/resly-mcp/server/index.js"
+      ],
+      "env": {
+        "RESLY_CLI": "/Users/zach/.local/bin/resly",
+        "RESLY_BASE_URL": "https://test.api.resly.com.au"
+      }
+    }
+  }
+}

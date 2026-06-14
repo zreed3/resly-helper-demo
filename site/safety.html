@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Safe Changes | Resly Helper</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Resly Helper</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html">What It Checks</a>
+        <a href="use-cases.html">Daily Jobs</a>
+        <a href="safety.html" aria-current="page">Safe Changes</a>
+        <a href="integrations.html">Claude &amp; Codex</a>
+        <a href="demo.html">Try It</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-title">
+        <div class="section-inner">
+          <p class="eyebrow">Safe changes</p>
+          <div>
+            <h1>The assistant can help. It cannot quietly change the hotel.</h1>
+            <p>Managers stay in control of anything that affects live bookings, prices, rooms, or alerts.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner split">
+          <div class="reveal">
+            <p class="eyebrow">Simple rule</p>
+            <h2>Look first. Approve second. Change last.</h2>
+            <p class="section-lede">Claude or Codex can check the hotel data and prepare a change. The live change is blocked until a human approves that exact change.</p>
+          </div>
+          <ul class="plain-list reveal">
+            <li><strong>Step 1: Preview</strong> The assistant shows what it wants to change.</li>
+            <li><strong>Step 2: Approve</strong> A manager approves the exact change.</li>
+            <li><strong>Step 3: Apply</strong> The system checks that nothing changed, then applies or refuses.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <p class="eyebrow">What is blocked</p>
+          <h2>Designed to avoid expensive mistakes.</h2>
+          <div class="steps reveal">
+            <article class="step">
+              <span class="number">1</span>
+              <h3>No booking delete</h3>
+              <p>The demo does not give agents a tool to delete or cancel reservations.</p>
+            </article>
+            <article class="step">
+              <span class="number">2</span>
+              <h3>No hidden price change</h3>
+              <p>Rate changes need a preview and a one-time approval before they go live.</p>
+            </article>
+            <article class="step">
+              <span class="number">3</span>
+              <h3>No changed file trick</h3>
+              <p>If the change is edited after approval, the live update is refused.</p>
+            </article>
+            <article class="step">
+              <span class="number">4</span>
+              <h3>Extra care in production</h3>
+              <p>Live hotel data needs extra confirmation before any write is allowed.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section deep">
+        <div class="section-inner split">
+          <div class="reveal">
+            <p class="eyebrow">For managers</p>
+            <h2>You do not need to understand the lock.</h2>
+            <p class="section-lede">The important part is simple: the assistant can suggest. The manager decides. The system checks the approval before it touches live data.</p>
+          </div>
+          <div class="feature-grid reveal">
+            <article class="feature">
+              <h3>Read-only by default</h3>
+              <p>The assistant starts by looking up bookings, rooms, and rates.</p>
+            </article>
+            <article class="feature">
+              <h3>Clear approval</h3>
+              <p>Any live change has to be approved as a separate step.</p>
+            </article>
+            <article class="feature">
+              <h3>Safe for demos</h3>
+              <p>The demo works with sample data when no real credentials are present.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner">
+          <p class="eyebrow">Example</p>
+          <h2>A safe pricing workflow.</h2>
+          <div class="usecase-list reveal">
+            <article class="usecase">
+              <div class="usecase-meta">
+                <span class="time-chip">Preview</span>
+                <h3>Assistant prepares the change</h3>
+                <p class="prompt-line">"Saturday looks busy. Here is the suggested price change."</p>
+              </div>
+              <div class="usecase-detail">
+                <p>The assistant checks demand and creates a preview. Nothing live has changed.</p>
+                <div class="mini-flow">
+                  <span>Check demand</span>
+                  <span>Prepare preview</span>
+                  <span>Wait for approval</span>
+                </div>
+              </div>
+            </article>
+            <article class="usecase">
+              <div class="usecase-meta">
+                <span class="time-chip">Approve</span>
+                <h3>Manager approves the exact change</h3>
+                <p class="prompt-line">"I have checked this. Apply this one change."</p>
+              </div>
+              <div class="usecase-detail">
+                <p>The system checks that the approved change still matches. If it does not match, it refuses.</p>
+                <div class="mini-flow">
+                  <span>Human approves</span>
+                  <span>System checks match</span>
+                  <span>Apply or refuse</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-inner"><span>Resly Helper demo</span><span>Safe changes</span></div>
+    </footer>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

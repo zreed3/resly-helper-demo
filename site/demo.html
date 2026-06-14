@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Try It | Resly Helper</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Resly Helper</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html">What It Checks</a>
+        <a href="use-cases.html">Daily Jobs</a>
+        <a href="safety.html">Safe Changes</a>
+        <a href="integrations.html">Claude &amp; Codex</a>
+        <a href="demo.html" aria-current="page">Try It</a>
+      </nav>
+    </header>
+    <main>
+      <section class="page-title">
+        <div class="section-inner">
+          <p class="eyebrow">Try it</p>
+          <div>
+            <h1>A simple demo story for hotel managers.</h1>
+            <p>Start with sample data. Show useful answers. Then show that live changes need approval.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner demo-grid">
+          <aside class="demo-menu">
+            <a href="#start">Start</a>
+            <a href="#availability">Availability</a>
+            <a href="#today">Today</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#approval">Approval</a>
+          </aside>
+          <div class="demo-stack">
+            <section id="start" class="reveal">
+              <h2>1. Start with sample hotel data</h2>
+              <p class="section-lede">The demo works even without real Resly credentials, so the story is safe to show.</p>
+              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json doctor</code></pre>
+            </section>
+            <section id="availability" class="reveal">
+              <h2>2. Answer a guest question</h2>
+              <p class="section-lede">"How many rooms are available for 3 people this weekend?"</p>
+              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json room-types list
+resly --json inventory get --room-type 1BR-GARDEN --from 2026-07-05 --to 2026-07-07
+resly --json rates get --rate-plan BAR-1BR-GARDEN --from 2026-07-05 --to 2026-07-07</code></pre>
+            </section>
+            <section id="today" class="reveal">
+              <h2>3. Show the morning brief</h2>
+              <p class="section-lede">Arrivals, departures, booking changes, and room pressure in one place.</p>
+              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json reservations list --from 2026-07-01 --to 2026-07-31 --limit 10
+resly --json reservations in-house
+resly --json blocks list --date-type in-between --from 2026-07-01 --to 2026-07-07</code></pre>
+            </section>
+            <section id="pricing" class="reveal">
+              <h2>4. Prepare a price change</h2>
+              <p class="section-lede">The assistant can prepare a rate change preview. Nothing is published yet.</p>
+              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json rates preview --rate-plan BAR-1BR-GARDEN --file examples/rate-update.json</code></pre>
+            </section>
+            <section id="approval" class="reveal">
+              <h2>5. Show the safety lock</h2>
+              <p class="section-lede">A live change needs a separate approval token. Without it, the change is refused.</p>
+              <pre class="command-block"><button class="copy-btn">Copy</button><code>resly --json rates update --rate-plan BAR-1BR-GARDEN --file examples/rate-update.json --live</code></pre>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner quote reveal">
+          <h2>What Resly is selling</h2>
+          <p>A hotel-friendly way to use Resly data: faster manager answers, safer pricing workflows, fewer repetitive checks, and chat-based help that does not get unsafe powers.</p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="section-inner"><span>Resly Helper demo</span><span>Try it</span></div>
+    </footer>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

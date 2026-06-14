@@ -1,0 +1,23 @@
+{
+  "name": "resly-open-api",
+  "version": "0.1.0",
+  "description": "Codex companion plugin for operating the Resly Open API demo CLI safely.",
+  "author": {
+    "name": "Resly CLI Demo"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Resly Open API",
+    "shortDescription": "Use the Resly CLI for API discovery, diagnostics, and safe previews.",
+    "longDescription": "A Codex companion for the Resly Open API demo CLI. It guides agents through fixture-backed reads, live authentication checks, reservation and pricing discovery, dry-run webhook setup, and explicit-only write flows.",
+    "developerName": "Resly CLI Demo",
+    "category": "Developer Tools",
+    "capabilities": ["CLI", "API", "Read", "Write Preview"],
+    "defaultPrompt": [
+      "Check the Resly API setup.",
+      "List upcoming Resly reservations.",
+      "Preview a Resly rate update."
+    ],
+    "brandColor": "#0E7C86"
+  }
+}

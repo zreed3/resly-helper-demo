@@ -1,0 +1,19 @@
+{
+  "echoToken": "demo-rate-update-2026-07-04",
+  "restrictions": [
+    {
+      "date": "2026-07-04",
+      "rate": 385,
+      "minStay": 2,
+      "stopSell": false,
+      "cta": true,
+      "ctd": false
+    },
+    {
+      "date": "2026-07-05",
+      "rate": 345,
+      "minStay": 1,
+      "stopSell": false
+    }
+  ]
+}

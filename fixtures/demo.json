@@ -1,0 +1,286 @@
+{
+  "account": {
+    "type": "property",
+    "data": {
+      "hotelId": "resly-demo-resort",
+      "name": "Resly Demo Resort",
+      "currency": "AUD",
+      "timezone": "Australia/Brisbane",
+      "environment": "fixture",
+      "portfolioId": "demo-portfolio"
+    }
+  },
+  "agents": {
+    "type": "agents",
+    "count": 3,
+    "data": [
+      {
+        "agentId": "DIRECT",
+        "agentName": "Direct",
+        "channel": "direct",
+        "active": true
+      },
+      {
+        "agentId": "BOOKING-COM",
+        "agentName": "Booking.com",
+        "channel": "ota",
+        "active": true
+      },
+      {
+        "agentId": "AIRBNB",
+        "agentName": "Airbnb",
+        "channel": "ota",
+        "active": true
+      }
+    ]
+  },
+  "room_types": {
+    "type": "room-types",
+    "count": 3,
+    "data": [
+      {
+        "roomTypeId": "1BR-GARDEN",
+        "roomTypeName": "One Bedroom Garden Apartment",
+        "maxOccupancy": 3,
+        "portfolioId": "demo-portfolio",
+        "active": true
+      },
+      {
+        "roomTypeId": "2BR-OCEAN",
+        "roomTypeName": "Two Bedroom Ocean Apartment",
+        "maxOccupancy": 5,
+        "portfolioId": "demo-portfolio",
+        "active": true
+      },
+      {
+        "roomTypeId": "PENTHOUSE",
+        "roomTypeName": "Penthouse Residence",
+        "maxOccupancy": 6,
+        "portfolioId": "demo-portfolio",
+        "active": true
+      }
+    ]
+  },
+  "rooms": {
+    "type": "rooms",
+    "count": 4,
+    "data": [
+      {
+        "roomId": "101",
+        "roomName": "Apartment 101",
+        "roomTypeId": "1BR-GARDEN",
+        "status": "available",
+        "level": 1
+      },
+      {
+        "roomId": "202",
+        "roomName": "Apartment 202",
+        "roomTypeId": "1BR-GARDEN",
+        "status": "occupied",
+        "level": 2
+      },
+      {
+        "roomId": "405",
+        "roomName": "Apartment 405",
+        "roomTypeId": "2BR-OCEAN",
+        "status": "available",
+        "level": 4
+      },
+      {
+        "roomId": "PH1",
+        "roomName": "Penthouse 1",
+        "roomTypeId": "PENTHOUSE",
+        "status": "maintenance",
+        "level": 12
+      }
+    ]
+  },
+  "rate_plans": {
+    "type": "rate-plans",
+    "count": 3,
+    "data": [
+      {
+        "ratePlanId": "BAR-1BR-GARDEN",
+        "ratePlanName": "Best Available Rate - One Bedroom Garden",
+        "roomTypeId": "1BR-GARDEN",
+        "currency": "AUD"
+      },
+      {
+        "ratePlanId": "BAR-2BR-OCEAN",
+        "ratePlanName": "Best Available Rate - Two Bedroom Ocean",
+        "roomTypeId": "2BR-OCEAN",
+        "currency": "AUD"
+      },
+      {
+        "ratePlanId": "BAR-PENTHOUSE",
+        "ratePlanName": "Best Available Rate - Penthouse",
+        "roomTypeId": "PENTHOUSE",
+        "currency": "AUD"
+      }
+    ]
+  },
+  "reservations": {
+    "type": "reservations",
+    "count": 3,
+    "data": [
+      {
+        "hotelId": "resly-demo-resort",
+        "reservationId": "RSV-1001",
+        "currency": "AUD",
+        "status": "confirmed",
+        "reservationRef": "1001",
+        "checkIn": "2026-07-02",
+        "checkOut": "2026-07-06",
+        "roomId": "101",
+        "roomName": "Apartment 101",
+        "roomTypeId": "1BR-GARDEN",
+        "roomTypeName": "One Bedroom Garden Apartment",
+        "agentId": "DIRECT",
+        "agentName": "Direct",
+        "ratePlanId": "BAR-1BR-GARDEN",
+        "ratePlanName": "Best Available Rate - One Bedroom Garden",
+        "firstName": "Avery",
+        "lastName": "Stone",
+        "adults": 2,
+        "children": 0,
+        "email": "avery@example.invalid",
+        "mobile": "+61000000000",
+        "accommodationTotal": 1280,
+        "grandTotal": 1280,
+        "balance": 640,
+        "timestampLastModified": "2026-06-12T03:12:00+00:00"
+      },
+      {
+        "hotelId": "resly-demo-resort",
+        "reservationId": "RSV-1002",
+        "currency": "AUD",
+        "status": "confirmed",
+        "reservationRef": "1002",
+        "checkIn": "2026-07-08",
+        "checkOut": "2026-07-12",
+        "roomId": "405",
+        "roomName": "Apartment 405",
+        "roomTypeId": "2BR-OCEAN",
+        "roomTypeName": "Two Bedroom Ocean Apartment",
+        "agentId": "BOOKING-COM",
+        "agentName": "Booking.com",
+        "ratePlanId": "BAR-2BR-OCEAN",
+        "ratePlanName": "Best Available Rate - Two Bedroom Ocean",
+        "firstName": "Mika",
+        "lastName": "Chen",
+        "adults": 2,
+        "children": 2,
+        "email": "mika@example.invalid",
+        "mobile": "+61000000001",
+        "accommodationTotal": 2240,
+        "grandTotal": 2240,
+        "balance": 1120,
+        "timestampLastModified": "2026-06-13T04:40:00+00:00"
+      },
+      {
+        "hotelId": "resly-demo-resort",
+        "reservationId": "RSV-1003",
+        "currency": "AUD",
+        "status": "cancelled",
+        "reservationRef": "1003",
+        "checkIn": "2026-07-15",
+        "checkOut": "2026-07-18",
+        "roomId": "PH1",
+        "roomName": "Penthouse 1",
+        "roomTypeId": "PENTHOUSE",
+        "roomTypeName": "Penthouse Residence",
+        "agentId": "AIRBNB",
+        "agentName": "Airbnb",
+        "ratePlanId": "BAR-PENTHOUSE",
+        "ratePlanName": "Best Available Rate - Penthouse",
+        "firstName": "Jordan",
+        "lastName": "Vale",
+        "adults": 4,
+        "children": 0,
+        "email": "jordan@example.invalid",
+        "mobile": "+61000000002",
+        "accommodationTotal": 3300,
+        "grandTotal": 3300,
+        "balance": 0,
+        "timestampLastModified": "2026-06-11T23:22:00+00:00"
+      }
+    ]
+  },
+  "reservations_inhouse": {
+    "type": "reservations-inhouse",
+    "count": 1,
+    "data": [
+      {
+        "reservationId": "RSV-1001",
+        "roomId": "101",
+        "roomName": "Apartment 101",
+        "guestName": "Avery Stone",
+        "checkIn": "2026-07-02",
+        "checkOut": "2026-07-06",
+        "status": "in-house"
+      }
+    ]
+  },
+  "blocks": {
+    "type": "blocks",
+    "count": 1,
+    "data": [
+      {
+        "blockId": "BLK-9001",
+        "roomId": "PH1",
+        "roomName": "Penthouse 1",
+        "startDate": "2026-07-01",
+        "endDate": "2026-07-05",
+        "reason": "Owner maintenance"
+      }
+    ]
+  },
+  "inventory": {
+    "type": "inventory",
+    "count": 7,
+    "roomTypeId": "1BR-GARDEN",
+    "data": [
+      { "date": "2026-07-01", "available": 2, "sold": 1, "blocked": 0 },
+      { "date": "2026-07-02", "available": 1, "sold": 2, "blocked": 0 },
+      { "date": "2026-07-03", "available": 1, "sold": 2, "blocked": 0 },
+      { "date": "2026-07-04", "available": 0, "sold": 3, "blocked": 0 },
+      { "date": "2026-07-05", "available": 1, "sold": 2, "blocked": 0 },
+      { "date": "2026-07-06", "available": 2, "sold": 1, "blocked": 0 },
+      { "date": "2026-07-07", "available": 2, "sold": 1, "blocked": 0 }
+    ]
+  },
+  "rates": {
+    "type": "rates-and-restrictions",
+    "count": 7,
+    "ratePlanId": "BAR-1BR-GARDEN",
+    "data": [
+      { "date": "2026-07-01", "rate": 290, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+      { "date": "2026-07-02", "rate": 320, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+      { "date": "2026-07-03", "rate": 340, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": false, "ctd": false },
+      { "date": "2026-07-04", "rate": 360, "stopSell": false, "minStay": 2, "maxStay": 0, "cta": true, "ctd": false },
+      { "date": "2026-07-05", "rate": 330, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+      { "date": "2026-07-06", "rate": 300, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false },
+      { "date": "2026-07-07", "rate": 300, "stopSell": false, "minStay": 1, "maxStay": 0, "cta": false, "ctd": false }
+    ]
+  },
+  "webhooks": {
+    "type": "webhooks",
+    "count": 2,
+    "data": [
+      {
+        "id": "resly-reservations",
+        "url": "https://example.com/resly/reservations",
+        "integrationId": "resly",
+        "hookType": "reservations",
+        "active": true
+      },
+      {
+        "id": "resly-roomTypes",
+        "url": "https://example.com/resly/room-types",
+        "integrationId": "resly",
+        "hookType": "roomTypes",
+        "active": true
+      }
+    ]
+  }
+}

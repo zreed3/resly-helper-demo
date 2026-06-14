@@ -1,0 +1,54 @@
+{
+  "manifest_version": "0.2",
+  "name": "resly-open-api",
+  "version": "0.1.0",
+  "description": "Claude Desktop extension for the Resly Open API demo CLI.",
+  "author": {
+    "name": "Resly CLI Demo"
+  },
+  "server": {
+    "type": "node",
+    "entry_point": "server/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/server/index.js"
+      ],
+      "env": {
+        "RESLY_CLI": "${user_config.resly_cli_path}",
+        "RESLY_BASE_URL": "${user_config.resly_base_url}",
+        "RESLY_ACCOUNT_ID": "${user_config.resly_account_id}",
+        "RESLY_API_KEY": "${user_config.resly_api_key}"
+      }
+    }
+  },
+  "user_config": {
+    "resly_cli_path": {
+      "type": "string",
+      "title": "Resly CLI path",
+      "description": "Path to the installed resly binary. Use 'resly' when it is already on PATH.",
+      "default": "resly",
+      "required": true
+    },
+    "resly_base_url": {
+      "type": "string",
+      "title": "Resly base URL",
+      "description": "Use the test API for demos unless production access is explicitly required.",
+      "default": "https://test.api.resly.com.au",
+      "required": true
+    },
+    "resly_account_id": {
+      "type": "string",
+      "title": "Resly account ID",
+      "description": "Optional for fixture-only demos.",
+      "required": false
+    },
+    "resly_api_key": {
+      "type": "string",
+      "title": "Resly API key",
+      "description": "Optional for fixture-only demos. Stored securely by Claude Desktop when configured.",
+      "sensitive": true,
+      "required": false
+    }
+  }
+}

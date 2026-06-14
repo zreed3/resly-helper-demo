@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Daily Jobs | Resly Helper</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Resly Helper</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html">What It Checks</a>
+        <a href="use-cases.html" aria-current="page">Daily Jobs</a>
+        <a href="safety.html">Safe Changes</a>
+        <a href="integrations.html">Claude &amp; Codex</a>
+        <a href="demo.html">Try It</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="usecase-hero">
+        <img class="hero-art manager-image" src="assets/hotel-manager-board.jpg" alt="Hotel manager board with room, booking, housekeeping, and pricing checks" />
+        <div class="hero-inner reveal visible">
+          <p class="eyebrow">Daily hotel jobs</p>
+          <h1>Use cases hotel managers understand straight away.</h1>
+          <p class="hero-copy">The assistant is useful when it saves a manager from checking the same screens again and again.</p>
+          <div class="actions">
+            <a class="button primary" href="#phone">Phone example</a>
+            <a class="button secondary" href="#pricing">Pricing help</a>
+          </div>
+          <nav class="role-switch" aria-label="Use case sections">
+            <a href="#front-desk">Front desk</a>
+            <a href="#rooms">Rooms</a>
+            <a href="#pricing">Pricing</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner split">
+          <div class="reveal">
+            <p class="eyebrow">Behind the scenes</p>
+            <h2>A small team of helpers checks different parts of the hotel.</h2>
+            <p class="section-lede">One helper checks bookings. One checks rooms. One checks prices. The manager gets one short answer, not a technical report.</p>
+          </div>
+          <div class="agent-team reveal">
+            <article>
+              <h3>Booking helper</h3>
+              <p>Looks at arrivals, departures, changes, cancellations, and no-shows.</p>
+            </article>
+            <article>
+              <h3>Room helper</h3>
+              <p>Checks room types, occupancy, blocked rooms, and tight turnarounds.</p>
+            </article>
+            <article>
+              <h3>Price helper</h3>
+              <p>Reviews rates and prepares a change for approval when demand is high.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="phone" class="section">
+        <div class="section-inner phone-panel reveal">
+          <div class="phone-shell" aria-label="Phone assistant conversation example">
+            <div class="phone-message">Can we take 3 people from July 5 to July 7?</div>
+            <div class="phone-message answer">Yes. Two room types fit 3 people. One Bedroom Garden is cheaper but tight on July 6.</div>
+            <div class="phone-message">What should I tell the guest?</div>
+            <div class="phone-message answer">Quote Two Bedroom Ocean if they want flexibility. Quote One Bedroom Garden only if they are ready to book now.</div>
+          </div>
+          <div>
+            <p class="eyebrow">From a phone</p>
+            <h2>Ask while you are away from the desk.</h2>
+            <p class="section-lede">A manager can ask a simple question and get an answer based on room types, availability, and rates.</p>
+            <pre class="command-block"><button class="copy-btn">Copy</button><code>Ask:
+"How many rooms are available for 3 people this weekend?"
+
+Answer:
+"Two options fit. One is cheaper. One has more availability."</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="front-desk" class="section alt">
+        <div class="section-inner">
+          <p class="eyebrow">Front desk</p>
+          <h2>Answers staff need while guests are waiting.</h2>
+          <div class="usecase-list reveal">
+            <article class="usecase">
+              <div class="usecase-meta">
+                <span class="time-chip">10 min saved</span>
+                <h3>Can we move this booking?</h3>
+                <p class="prompt-line">"Can this guest move to Friday and Saturday in the same room type?"</p>
+              </div>
+              <div class="usecase-detail">
+                <p>The helper checks the booking, the new dates, available rooms, and the likely price difference before staff call the guest back.</p>
+                <div class="mini-flow">
+                  <span>Check the booking</span>
+                  <span>Check the new dates</span>
+                  <span>Show safe options</span>
+                </div>
+              </div>
+            </article>
+            <article class="usecase">
+              <div class="usecase-meta">
+                <span class="time-chip">15 min saved</span>
+                <h3>What changed today?</h3>
+                <p class="prompt-line">"Show booking changes since yesterday afternoon."</p>
+              </div>
+              <div class="usecase-detail">
+                <p>The helper finds changes, cancellations, and new bookings so staff do not need to scan the list by eye.</p>
+                <div class="mini-flow">
+                  <span>Find changes</span>
+                  <span>Group by urgency</span>
+                  <span>Give a short list</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="rooms" class="section">
+        <div class="section-inner">
+          <p class="eyebrow">Rooms and housekeeping</p>
+          <h2>Keep the day moving before check-in starts.</h2>
+          <div class="usecase-list reveal">
+            <article class="usecase">
+              <div class="usecase-meta">
+                <span class="time-chip">20 min saved</span>
+                <h3>Which rooms should be cleaned first?</h3>
+                <p class="prompt-line">"Give housekeeping the rooms that matter most before 3 pm."</p>
+              </div>
+              <div class="usecase-detail">
+                <p>The helper checks departures, same-day arrivals, blocks, and room type pressure, then gives a simple priority list.</p>
+                <div class="mini-flow">
+                  <span>Check departures</span>
+                  <span>Find tight turns</span>
+                  <span>Sort by priority</span>
+                </div>
+              </div>
+            </article>
+            <article class="usecase">
+              <div class="usecase-meta">
+                <span class="time-chip">30 min saved</span>
+                <h3>Where are we nearly full?</h3>
+                <p class="prompt-line">"Which room types are close to selling out in the next two weeks?"</p>
+              </div>
+              <div class="usecase-detail">
+                <p>The helper checks inventory and rates, then shows dates where managers should watch price, restrictions, or overbooking risk.</p>
+                <div class="mini-flow">
+                  <span>Scan availability</span>
+                  <span>Compare rates</span>
+                  <span>Show the risk dates</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section deep">
+        <div class="section-inner split">
+          <div class="reveal">
+            <p class="eyebrow">Pricing help</p>
+            <h2>Build a rate change without letting the assistant publish it.</h2>
+            <p class="section-lede">Claude or Codex can check demand, look at current rates, and prepare a suggested change. The hotel manager still approves before anything goes live.</p>
+            <div class="actions">
+              <a class="button primary" href="safety.html">See safe approval</a>
+              <a class="button secondary" href="demo.html">Try sample data</a>
+            </div>
+          </div>
+          <ul class="plain-list reveal">
+            <li><strong>Ask</strong> "Are we underpriced this Saturday?"</li>
+            <li><strong>Review</strong> "Demand is high. A small increase is ready to preview."</li>
+            <li><strong>Approve</strong> "Apply only after a manager checks the exact change."</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner">
+          <p class="eyebrow">Best first demos</p>
+          <h2>Start with jobs that save time every week.</h2>
+          <div class="feature-grid reveal">
+            <article class="feature">
+              <h3>Rooms for 3 people</h3>
+              <p>A common guest question that usually needs room type, inventory, and rate checks.</p>
+            </article>
+            <article class="feature">
+              <h3>Morning manager brief</h3>
+              <p>A short list of arrivals, departures, booking changes, and room risks.</p>
+            </article>
+            <article class="feature">
+              <h3>Weekend price preview</h3>
+              <p>A safe draft for a rate change when the property is close to full.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-inner"><span>Resly Helper demo</span><span>Daily jobs</span></div>
+    </footer>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

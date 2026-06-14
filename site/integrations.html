@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Claude & Codex | Resly Helper</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html"><span class="brand-mark"></span><span>Resly Helper</span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="capabilities.html">What It Checks</a>
+        <a href="use-cases.html">Daily Jobs</a>
+        <a href="safety.html">Safe Changes</a>
+        <a href="integrations.html" aria-current="page">Claude &amp; Codex</a>
+        <a href="demo.html">Try It</a>
+      </nav>
+    </header>
+    <main>
+      <section class="page-title">
+        <div class="section-inner">
+          <p class="eyebrow">Claude and Codex</p>
+          <div>
+            <h1>Use chat to ask hotel questions.</h1>
+            <p>Claude or Codex can check Resly for you and return a short answer a manager can use.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section alt">
+        <div class="section-inner integration-list reveal">
+          <article class="integration">
+            <h2>Claude</h2>
+            <p>Good for managers who want to ask normal questions: available rooms, booking changes, price checks, and daily summaries.</p>
+            <ul class="plain-list">
+              <li><strong>Example</strong> "What should I know before check-in starts?"</li>
+              <li><strong>Safety</strong> Claude can read and preview. It cannot quietly publish a change.</li>
+            </ul>
+          </article>
+          <article class="integration">
+            <h2>Codex</h2>
+            <p>Good for building and improving the workflows: pricing checks, reporting scripts, and safe approval steps.</p>
+            <ul class="plain-list">
+              <li><strong>Example</strong> "Build a weekend price preview for these room types."</li>
+              <li><strong>Safety</strong> Codex still has to use the same approval rules as everyone else.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <p class="eyebrow">What chat can do</p>
+          <h2>Useful questions, simple answers.</h2>
+          <div class="feature-grid reveal">
+            <article class="feature"><h3>Check availability</h3><p>"Do we have rooms for 3 people next weekend?"</p></article>
+            <article class="feature"><h3>Summarize today</h3><p>"What arrivals, departures, and changes need attention?"</p></article>
+            <article class="feature"><h3>Review prices</h3><p>"Are we nearly full on Saturday, and should we preview a rate change?"</p></article>
+            <article class="feature"><h3>Find changes</h3><p>"What bookings changed since yesterday?"</p></article>
+            <article class="feature"><h3>Prepare alerts</h3><p>"Tell me when a reservation changes and what changed."</p></article>
+            <article class="feature"><h3>Explain the answer</h3><p>"Show which rooms, bookings, and rates you checked."</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section deep">
+        <div class="section-inner split">
+          <div class="reveal">
+            <p class="eyebrow">For the technical handoff</p>
+            <h2>The manager sees chat. The team gets a real integration.</h2>
+            <p class="section-lede">Under the hood, this demo includes a Codex plugin and a Claude package. That gives Resly something practical to test without asking managers to learn API language.</p>
+          </div>
+          <pre class="command-block reveal"><button class="copy-btn">Copy</button><code>Codex plugin: plugins/resly-open-api
+Claude package: claude/resly-mcp/resly-open-api.mcpb
+Shared safe layer: resly CLI</code></pre>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="section-inner"><span>Resly Helper demo</span><span>Claude and Codex</span></div>
+    </footer>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

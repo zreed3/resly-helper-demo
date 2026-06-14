@@ -1,0 +1,72 @@
+# Resly Documentation
+
+## Guides
+- [Channel Testing](https://docs.resly.com.au/docs/channel-testing.md): Here is a document to assist with all testing scenarios
+- [Keeping Reservations Updated with Resly](https://docs.resly.com.au/docs/keeping-reservations-updated-with-resly.md): To maintain constant synchronization with Resly's reservation data, it is important to utilize a combination of endpoints and webhooks. This guide explains the steps to ensure your integration stays in sync efficiently and accurately.
+- [Pricing Management Software Integration Guide](https://docs.resly.com.au/docs/pricing-management-software-integration-guide.md): Welcome to the Resly Open API Guide for Pricing Management Software Integration. This guide will help you integrate Resly’s powerful APIs for effective pricing management.
+- [Authentication](https://docs.resly.com.au/docs/authentication-1.md): Resly’s Open API requires secure authentication to access its endpoints. This guide walks you through the steps to authenticate your requests and manage access tokens effectively.
+- [Integration Onboarding Flow (Certified Partner)](https://docs.resly.com.au/docs/integration-onboarding-flow-certified-partner.md)
+
+## API Reference
+- [Booking Delivery](https://docs.resly.com.au/reference/resly-express-booking-delivery.md)
+- [Retrieve Listings](https://docs.resly.com.au/reference/resly-express-listings.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference.md)
+- [Retrieve agents](https://docs.resly.com.au/reference/retrieve-agents.md)
+- [Field Reference](https://docs.resly.com.au/reference/description.md)
+- [Retrieve account information](https://docs.resly.com.au/reference/retrieve-an-account.md)
+- [Retrieve access token](https://docs.resly.com.au/reference/list-reservations.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-4.md)
+- [Retrieve Blocks](https://docs.resly.com.au/reference/retrieve-blocks.md)
+- [Webhooks: Blocks](https://docs.resly.com.au/reference/webhooks-blocks.md)
+- [Room Types / Listings](https://docs.resly.com.au/reference/listings-room-types.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-6.md)
+- [Retrieve a specific room type](https://docs.resly.com.au/reference/retrieve-a-specific-room-type.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-7.md)
+- [Retrieve inventory](https://docs.resly.com.au/reference/retrieve-inventory.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-5.md)
+- [Retrieve room types](https://docs.resly.com.au/reference/retrieve-room-types.md)
+- [Webhooks: Room Types](https://docs.resly.com.au/reference/webhooks-room-types.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-13.md)
+- [Retrieve a specific conversation](https://docs.resly.com.au/reference/retrieve-a-specific-conversation.md): Use this endpoint to retrieve a single conversation. Conversations will include emails, SMS messages and channel messages.
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-15.md)
+- [Retrieve a specific thread](https://docs.resly.com.au/reference/retrieve-a-specific-thread.md): Use this endpoint to retrieve a single thread. A thread includes channel messages.
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-12.md)
+- [Retrieve conversations](https://docs.resly.com.au/reference/retrieve-conversations.md): Use this endpoint to retrieve a list of conversations.  Conversations will include emails, SMS messages and channel messages.
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-14.md)
+- [Retrieve threads](https://docs.resly.com.au/reference/retrieve-threads.md): Use this endpoint to retrieve a single thread. A thread includes channel messages.
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-16.md)
+- [Send a message](https://docs.resly.com.au/reference/send-a-message.md)
+- [Webhooks: Messages](https://docs.resly.com.au/reference/webhook-message.md): Webhook notifications concerning messages.
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-9.md)
+- [Retrieve rates & restrictions](https://docs.resly.com.au/reference/retrieve-rate-plan-rates-and-restrictions.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-8.md)
+- [Retrieve rate plans](https://docs.resly.com.au/reference/retrieve-rate-plans.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-20.md)
+- [Update rates & restrictions](https://docs.resly.com.au/reference/update-rate-plan-rates-and-restrictions.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-3.md)
+- [Retrieve a specific reservation](https://docs.resly.com.au/reference/retrieve-a-reservation.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-2.md)
+- [Retrieve In-House Reservations](https://docs.resly.com.au/reference/retrieve-in-house-reservations.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-1.md)
+- [Retrieve reservations](https://docs.resly.com.au/reference/retrieve-reservations.md)
+- [Update a reservation](https://docs.resly.com.au/reference/update-a-reservation.md)
+- [Webhooks: Reservations](https://docs.resly.com.au/reference/webhooks-reservations.md): Webhook notifications concerning reservations.
+- [Resly Direct](https://docs.resly.com.au/reference/resly-direct.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-19.md)
+- [Retrieve rates and availability](https://docs.resly.com.au/reference/retrieve-availability.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-18.md)
+- [Retrieve availability](https://docs.resly.com.au/reference/retrieve-inventory-1.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-17.md)
+- [Retrieve room types](https://docs.resly.com.au/reference/retrieve-room-types-1.md)
+- [Rooms](https://docs.resly.com.au/reference/rooms.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-11.md)
+- [Retrieve a specific room](https://docs.resly.com.au/reference/retrieve-a-specific-room.md)
+- [Field Reference](https://docs.resly.com.au/reference/field-reference-10.md)
+- [Retrieve rooms](https://docs.resly.com.au/reference/retrieve-rooms.md)
+- [Update a room](https://docs.resly.com.au/reference/update-room.md)
+- [Webhooks: Rooms](https://docs.resly.com.au/reference/webhooks-rooms.md)
+- [Create a webhook](https://docs.resly.com.au/reference/create-a-webhook.md)
+- [Retrieve a specific webhook](https://docs.resly.com.au/reference/retrieve-a-specific-webhook.md)
+- [Retrieve webhooks](https://docs.resly.com.au/reference/retrieve-webhooks.md)
+- [Delete a webhook](https://docs.resly.com.au/reference/update-a-webhook-copy.md)
+- [Update a webhook](https://docs.resly.com.au/reference/update-a-webhook.md)

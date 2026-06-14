@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        width: 1200px;
+        height: 820px;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background: #172027;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .board {
+        width: 1000px;
+        height: 650px;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 22px;
+        background: #f8faf9;
+        box-shadow: 0 42px 120px rgba(0, 0, 0, 0.38);
+      }
+
+      .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 34px;
+        color: white;
+        background: #087f8c;
+      }
+
+      .top span {
+        display: block;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 18px;
+        font-weight: 750;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 40px;
+        line-height: 1.05;
+      }
+
+      .ask {
+        max-width: 360px;
+        padding: 14px 18px;
+        border-radius: 14px;
+        color: #172027;
+        background: white;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 24px;
+        padding: 28px;
+      }
+
+      .panel,
+      .answer {
+        border: 1px solid #d9e4e3;
+        border-radius: 16px;
+        background: white;
+      }
+
+      .panel {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        overflow: hidden;
+      }
+
+      .panel h2,
+      .answer h2 {
+        margin: 0;
+        padding: 18px 20px;
+        border-bottom: 1px solid #d9e4e3;
+        color: #172027;
+        font-size: 22px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        color: #24343c;
+        font-size: 18px;
+      }
+
+      td,
+      th {
+        padding: 15px 20px;
+        border-bottom: 1px solid #edf1f1;
+        text-align: left;
+      }
+
+      th {
+        color: #5f6e75;
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+
+      .tag {
+        display: inline-flex;
+        padding: 6px 9px;
+        border-radius: 8px;
+        color: white;
+        background: #2f7d52;
+        font-size: 14px;
+        font-weight: 850;
+      }
+
+      .tag.warn {
+        background: #cc5f3f;
+      }
+
+      .answer {
+        padding-bottom: 8px;
+      }
+
+      .answer p {
+        margin: 0;
+        padding: 0 20px 18px;
+        color: #4a5a62;
+        font-size: 18px;
+        line-height: 1.42;
+      }
+
+      .answer strong {
+        display: block;
+        margin: 14px 20px 8px;
+        color: #087f8c;
+        font-size: 46px;
+        line-height: 1;
+      }
+
+      .tasks {
+        display: grid;
+        gap: 10px;
+        padding: 0 20px 16px;
+      }
+
+      .tasks div {
+        padding: 12px 14px;
+        border-radius: 12px;
+        color: #24343c;
+        background: #eef6f3;
+        font-size: 17px;
+        font-weight: 760;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="board">
+      <section class="top">
+        <div>
+          <span>Resly Helper</span>
+          <h1>Today at Riverside Hotel</h1>
+        </div>
+        <div class="ask">“What needs my attention before 3pm?”</div>
+      </section>
+
+      <section class="content">
+        <article class="panel">
+          <h2>Manager board</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Area</th>
+                <th>Now</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Arrivals</td>
+                <td>18 today</td>
+                <td><span class="tag">2 early</span></td>
+              </tr>
+              <tr>
+                <td>Rooms for 3</td>
+                <td>2 options</td>
+                <td><span class="tag">quote ready</span></td>
+              </tr>
+              <tr>
+                <td>Housekeeping</td>
+                <td>6 turns</td>
+                <td><span class="tag warn">1 tight</span></td>
+              </tr>
+              <tr>
+                <td>Weekend rates</td>
+                <td>near sell-out</td>
+                <td><span class="tag">preview only</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="answer">
+          <h2>Plain answer</h2>
+          <strong>12 min saved</strong>
+          <p>The assistant checked bookings, room types, rates, and blocks. No system-hopping needed.</p>
+          <div class="tasks">
+            <div>Call guest in room 204</div>
+            <div>Clean 1BR Garden first</div>
+            <div>Approve rate preview later</div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
